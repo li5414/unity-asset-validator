@@ -1,5 +1,4 @@
-﻿/*
-AssetValidator 
+﻿AssetValidator 
 Copyright (c) 2018 Jeff Campbell
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,15 +18,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
-namespace JCMG.AssetValidator
-{
-    /// <summary>
-    /// Any Monobehavior decorated with ZeroChildren must not have any children Gameobject(s) 
-    /// underneath it either in a scene or as a prefab.
-    /// </summary>
-    public class ZeroChildenAttribute : ValidateAttribute
-    {
-
-    }
-}
