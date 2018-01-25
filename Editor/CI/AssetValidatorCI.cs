@@ -28,9 +28,6 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-// TODO Wrap up in appropriate IF DEF namespaces
-// using UnityEngine.Profiling;
-
 namespace JCMG.AssetValidator.Editor.CI
 {
     /// <summary>
@@ -129,7 +126,14 @@ namespace JCMG.AssetValidator.Editor.CI
 
         public class Result
         {
+            /// <summary>
+            /// Returns true if zero validation errors were found, false otherwise.
+            /// </summary>
             public bool isSuccessful;
+
+            /// <summary>
+            /// The message describing the result of the validation run.
+            /// </summary>
             public string message;
         }
 

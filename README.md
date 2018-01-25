@@ -1,12 +1,12 @@
 # Asset Validator
 The official repository for Asset Validator, an editor tool for validating assets in the project and in scenes.
 
-**Last Updated:** 1/25/2018 11:42 AM
+**Last Updated:** 1/25/2018 4:46 PM
 
-## Unity Editor
-This is the version of Unity the project was last updated with, but is not dependent on and can likely support many older and newer versions.
+![alt text](AssetValidatorEditorWindow.png "Editor Window")
 
-**Version:** 2017.3.0f3
+## Unity Editor Compatibility
+Tested on versions 5.2.2f1 through 2017.3.0f3
 
 ## Roadmap
 The roadmap for this project can be seen on the public trello board found here: https://trello.com/b/hDEXoZ7G
@@ -23,15 +23,54 @@ The AssetValidator is an editor tool for validating scenes and assets. It makes 
 * **Project Validators:** A validator derived from ```BaseProjectValidator``` that can be fired once against the project using its ```Validate()``` method and validate assets and/or settings in the project. No attributes are directly used for Project Validators
 
 ## Usage
-To run the validators themselves, select any of the menu items underneath *JCMG/AssetValidator* to run the appropriate set of validators. The results will be printed out to the console. There are several options to choose from when running validators:
+To run the validators manually, there are a couple of options for doing so:
+* **Dedicated Window**: By selecting the menu items "Window->Asset Validator" or by selecting "Tools->Asset Validator->*" you can either launch a window with options for configuring and executing validators and then manually run, or run validation through a pre-configured menu item option. Here are several such options:
+![alt text](AssetValidatorMenuItems.png "Editor Menu Items")
 
-* **Validate Project Assets:** All Project, Field, and Object validators will be run on assets in the Asset project folder.
+  * **Validate Project Assets:** All Project, Field, and Object validators will be run on assets in the Asset project folder.
 
-* **Validate Active Scene:** All Field and Object validators will be run against the currently open scene; Cross Scene validators will also be run with only the currently open scene in scope.
+  * **Validate Active Scene:** All Field and Object validators will be run against the currently open scene; Cross Scene validators will also be run with only the currently open scene in scope.
 
-* **Validate All Scenes in Build Settings:** All Cross Scene, Field and Object validators will be run against all scenes in the build settings
+  * **Validate All Scenes in Build Settings:** All Cross Scene, Field and Object validators will be run against all scenes in the build settings
 
-* **Validate All Scenes in Build Settings and Asset Bundles:** All Cross Scene, Field and Object validators will be run against all scenes in the build settings and any scenes that are included in Asset Bundles.
+  * **Validate All Scenes in Build Settings and Asset Bundles:** All Cross Scene, Field and Object validators will be run against all scenes in the build settings and any scenes that are included in Asset Bundles.
+
+* **Continuous Integration**: Using the ```AssetValidatorCI``` class it is possible to configure a validation run as a unit test which will run in an automated process. Examples of this can be found in the ```AssetValidatorCIExamples``` test class which demonstrates ways in which to fail the unit test when there are validation errors and how to output the results to an plaintext, csv, or html log.
+```csharp
+/// <summary>
+/// These are examples of how to run the AssetValidatorCI either as a part of a Continuous Integration process
+/// or as part of Unit tests in the project.
+/// </summary>
+[TestFixture]
+public class AssetValidatorCIExamples
+{
+    [Test]
+    [Ignore("This is an example of how to run the AssetValidator only on Project Assets" +
+            "as a Unit Test or CI process.")]
+    public void RunAssetValidatorOnProjectAssetsOnly()
+    {
+        var result = AssetValidatorCI.RunValidation(SceneValidationMode.None, 
+                                                    OutputFormat.None, 
+                                                    doValidateProjectAssets:true);
+
+        Assert.True(result.isSuccessful, result.message);
+    }
+
+    [Test]
+    [Ignore("This is an example of how to run the AssetValidator on Project Assets and on Build and AssetBundle Scenes" +
+            "and write out the results to a datetime formatted html log as a Unit Test or CI process.")]
+    public void RunAssetValidatorOnProjectAssets_BuildAndAssetBundleScenes()
+    {
+        var loggerFileName = string.Format("asset_validator_results_{0:h_mm_ss_MM_dd_yyyy}", DateTime.Now);
+        var result = AssetValidatorCI.RunValidation(SceneValidationMode.AllBuildAndAssetBundleScenes, 
+                                                    OutputFormat.Html,
+                                                    doValidateProjectAssets:true,
+                                                    fileName: loggerFileName);
+
+        Assert.True(result.isSuccessful, result.message);
+    }
+}
+```
 
 ## Validators
 These are valididators currently available for use in the project, organized by type.

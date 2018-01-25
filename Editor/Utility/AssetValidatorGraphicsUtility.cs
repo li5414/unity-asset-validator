@@ -178,14 +178,14 @@ namespace JCMG.AssetValidator.Editor.Utility
             switch (vLog == null ? VLogType.Info : vLog.vLogType)
             {
                 case VLogType.Warning:
-                    style = EditorStyles.boldLabel;
+                    style = EditorGUIUtility.isProSkin ? EditorStyles.whiteBoldLabel : EditorStyles.boldLabel;
                     break;
                 case VLogType.Error:
-                    style = EditorStyles.whiteBoldLabel;
+                    style = EditorGUIUtility.isProSkin ? EditorStyles.boldLabel : EditorStyles.whiteBoldLabel;
                     break;
                 case VLogType.Info:
                 default:
-                    style = EditorStyles.whiteBoldLabel;
+                    style = EditorGUIUtility.isProSkin ? EditorStyles.boldLabel : EditorStyles.whiteBoldLabel;
                     break;
             }
 

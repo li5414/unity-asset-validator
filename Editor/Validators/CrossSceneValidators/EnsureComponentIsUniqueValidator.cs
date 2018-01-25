@@ -96,7 +96,7 @@ public class EnsureFooComponentIsUniqueValidator : EnsureComponentIsUniqueValida
 
         public override bool Validate()
         {
-            if (_vLogList.Count == 0) return true;
+            if (_vLogList.Count <= 1) return true;
 
             for (var i = 0; i < _vLogList.Count; i++)
                 DispatchVLogEvent(_vLogList[i]);

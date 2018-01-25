@@ -72,19 +72,15 @@ namespace JCMG.AssetValidator.Editor.Window
 
         // Project Options
         private int _projectSelectionIndex;
-        private string[] _projectOptions = new[]
+        private readonly string[] _projectOptions = new[]
         {
             "Validate Project Assets ON",
             "Validate Project Assets OFF"
         };
 
-        // Debugging
-        private const float TIME_DELAY = .33f;
-        private float _currentEditorTime;
-        private float _currentTime;
-
+        // Debug Options
         private int _debugSelectionIndex;
-        private string[] _debugOptions = new[]
+        private readonly string[] _debugOptions = new[]
         {
             "Debugging OFF",
             "Debugging ON"
@@ -172,6 +168,8 @@ namespace JCMG.AssetValidator.Editor.Window
             var guiLayoutOptions = new [] { GUILayout.Height(30f), GUILayout.MinWidth(625f) };
             GUI.skin = _customGUISkin;
 
+            EditorGUI.BeginDisabledGroup(_runner != null && _runner.IsRunning());
+
             // Configuration Header
             EditorGUILayout.LabelField("Configuration", _headerStyle);
             EditorGUILayout.Separator();
@@ -202,6 +200,7 @@ namespace JCMG.AssetValidator.Editor.Window
             AssetValidatorUtility.IsDebugging = _debugSelectionIndex > 0;
             EditorGUILayout.EndHorizontal();
 
+
             // Run Validation Button
             // Configuration Header
             EditorGUILayout.Separator();
@@ -211,6 +210,7 @@ namespace JCMG.AssetValidator.Editor.Window
             if (GUILayout.Button("Run Validation", _buttonStyle, GUILayout.Height(40f)))
                 OnValidateSelectionClick(GetSelectedSceneMode(), DoValidateProjectAssets(), DoValidateAcrossScenes());
             GUI.skin = _customGUISkin;
+            EditorGUI.EndDisabledGroup();
 
             EditorGUILayout.Separator();
 
@@ -229,6 +229,7 @@ namespace JCMG.AssetValidator.Editor.Window
             EditorGUILayout.Separator();
 
             // Log Grouping Options
+            EditorGUI.BeginDisabledGroup(_runner != null && _runner.IsRunning());
             GUI.skin = _originalGUISkin;
             _groupByRect = EditorGUILayout.BeginHorizontal();
             _groupByOptionsIndex = GUILayout.Toolbar(_groupByOptionsIndex, _groupByOptionsNames, _toolbarStyle, guiLayoutOptions);
@@ -240,9 +241,10 @@ namespace JCMG.AssetValidator.Editor.Window
 
             // Display all logs for the current validation, if any
             GUI.skin = _originalGUISkin;
+            EditorGUI.EndDisabledGroup();
 
-            if (_runner == null && !HasLogs() || _runner.IsRunning())
-                EditorGUILayout.LabelField("No logs found...");
+            if (!HasLogs() || _runner != null && _runner.IsRunning())
+                EditorGUILayout.LabelField("No validation issues found...");
             else if(!IsRunning() && HasLogs())
                 OnLogsGUI();
         }
@@ -380,8 +382,6 @@ namespace JCMG.AssetValidator.Editor.Window
 
             if(doValidateAcrossScenes)
                 _runner.EnableCrossSceneValidation();
-
-            _currentEditorTime = Time.realtimeSinceStartup;
         }
 
 #region IDisposable
