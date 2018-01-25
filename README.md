@@ -1,12 +1,12 @@
 # Asset Validator
 The official repository for Asset Validator, an editor tool for validating assets in the project and in scenes.
 
-**Last Updated:** 12/22/2017 19:58
+**Last Updated:** 1/25/2018 11:42 AM
 
 ## Unity Editor
 This is the version of Unity the project was last updated with, but is not dependent on and can likely support many older and newer versions.
 
-**Version:** 2017.2.0f3
+**Version:** 2017.3.0f3
 
 ## Roadmap
 The roadmap for this project can be seen on the public trello board found here: https://trello.com/b/hDEXoZ7G
@@ -307,7 +307,7 @@ public class HeroClassResourcePathContract : ResourcePathContract
         var list = new List<string>();
 
         foreach (var heroValue in heroValues)
-            list.Add(string.Format("{0}/{1}_icon.png", HERO_ICON_FOLDER, heroValue.ToString().ToLower()));
+            list.Add(string.Format("{0}/{1}_icon", HERO_ICON_FOLDER, heroValue.ToString().ToLower()));
 
         return list;
     }
@@ -316,15 +316,28 @@ public class HeroClassResourcePathContract : ResourcePathContract
 ```
 
 ## Override Config
-Not every validator is going to be needed or relevant in every project; the AssetOverrideConfig scriptable object provides a straightforward way of globally enabling or disabling specific validators in the project. One should already exist at the path 'Assets/JCMG/AssetValidator/Editor/Config/ValidatorOverrideConfig.asset' and if not will be created the first time validation is run. All validators will be enabled by default when first created.
+Not every validator is going to be needed or relevant in every project; the AssetOverrideConfig scriptable object provides a straightforward way of globally enabling or disabling specific validators in the project. One should already exist at the path 'Assets/JCMG/AssetValidator/Editor/Config/ValidatorOverrideConfig.asset' and if not a default one will be created in memory. All validators will be enabled by default when first created.
 
 ## License
-unity-asset-validator Copyright (C) 2017  Jeff Campbell
+AssetValidator 
+Copyright (c) 2018 Jeff Campbell
 
-unity-asset-validator is licensed under a
-Creative Commons Attribution-NonCommercial 4.0 International License.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the license along with this
-work. If not, see <http://creativecommons.org/licenses/by-nc/4.0/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
         
 
