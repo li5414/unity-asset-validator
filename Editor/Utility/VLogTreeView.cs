@@ -122,21 +122,21 @@ namespace JCMG.AssetValidator.Editor.Utility
 
             if(vLogTreeViewHeader != null)
             {
-                labelRect.width -= 120f;
+                labelRect.width -= 150f;
                 
                 GUI.Label(labelRect, label, style);
 
                 var fieldRect = new Rect(labelRect)
                 {
                     xMin = labelRect.xMin + labelRect.width,
-                    width = 40f
+                    width = 50f
                 };
 
                 // Now that we have drawn our title, lets draw the aggregate logs if possible
                 GUI.Label(fieldRect, new GUIContent(vLogTreeViewHeader.infoCount.ToString(), AssetValidatorGraphicsUtility.InfoIconSmall)); //, EditorStyles.toolbarButton);
-                fieldRect.x += 40f;
+                fieldRect.x += 50f;
                 GUI.Label(fieldRect, new GUIContent(vLogTreeViewHeader.warningCount.ToString(), AssetValidatorGraphicsUtility.WarningIconSmall)); //, EditorStyles.toolbarButton);
-                fieldRect.x += 40f;
+                fieldRect.x += 50f;
                 GUI.Label(fieldRect, new GUIContent(vLogTreeViewHeader.errorCount.ToString(), AssetValidatorGraphicsUtility.ErrorIconSmall)); //, EditorStyles.toolbarButton);
             }
             else

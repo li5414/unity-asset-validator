@@ -288,22 +288,6 @@ namespace JCMG.AssetValidator.Editor.Window
             if (_runner == null) return;
             if (!_runner.IsRunning()) return;
 
-            // Debugging usage for UI Progress
-            if (AssetValidatorUtility.IsDebugging)
-            {
-                if (_currentTime < TIME_DELAY)
-                {
-                    _currentTime = GetEditorTime() - _currentEditorTime;
-
-                    return;
-                }
-                else
-                {
-                    _currentTime = 0f;
-                    _currentEditorTime = GetEditorTime();
-                }
-            }
-
             _runner.ContinueRunning();
 
             ForceEditorWindowUpdate();
@@ -513,15 +497,15 @@ namespace JCMG.AssetValidator.Editor.Window
 
                 var fieldRect = new Rect(rect)
                 {
-                    xMin = rect.xMin + rect.width - 120f,
-                    width = 40f
+                    xMin = rect.xMin + rect.width - 150f,
+                    width = 50f
                 };
 
                 // Now that we have drawn our title, lets draw the aggregate logs if possible
                 GUI.Label(fieldRect, new GUIContent(infoCount.ToString(), AssetValidatorGraphicsUtility.InfoIconSmall));
-                fieldRect.x += 40f;
+                fieldRect.x += 50f;
                 GUI.Label(fieldRect, new GUIContent(warningCount.ToString(), AssetValidatorGraphicsUtility.WarningIconSmall));
-                fieldRect.x += 40f;
+                fieldRect.x += 50f;
                 GUI.Label(fieldRect, new GUIContent(errorCount.ToString(), AssetValidatorGraphicsUtility.ErrorIconSmall));
 
                 EditorGUILayout.EndHorizontal();
@@ -578,15 +562,15 @@ namespace JCMG.AssetValidator.Editor.Window
 
             var fieldRect = new Rect(projectRect)
             {
-                xMin = projectRect.xMin + projectRect.width - 120f,
-                width = 40f
+                xMin = projectRect.xMin + projectRect.width - 150f,
+                width = 50f
             };
 
             // Now that we have drawn our title, lets draw the aggregate logs if possible
             GUI.Label(fieldRect, new GUIContent(infoCount.ToString(), AssetValidatorGraphicsUtility.InfoIconSmall));
-            fieldRect.x += 40f;
+            fieldRect.x += 50f;
             GUI.Label(fieldRect, new GUIContent(warningCount.ToString(), AssetValidatorGraphicsUtility.WarningIconSmall));
-            fieldRect.x += 40f;
+            fieldRect.x += 50f;
             GUI.Label(fieldRect, new GUIContent(errorCount.ToString(), AssetValidatorGraphicsUtility.ErrorIconSmall));
 
             EditorGUILayout.EndHorizontal();
@@ -626,15 +610,15 @@ namespace JCMG.AssetValidator.Editor.Window
 
             fieldRect = new Rect(sceneRect)
             {
-                xMin = sceneRect.xMin + sceneRect.width - 120f,
-                width = 40f
+                xMin = sceneRect.xMin + sceneRect.width - 150f,
+                width = 50f
             };
 
             // Now that we have drawn our title, lets draw the aggregate logs if possible
             GUI.Label(fieldRect, new GUIContent(infoCount.ToString(), AssetValidatorGraphicsUtility.InfoIconSmall));
-            fieldRect.x += 40f;
+            fieldRect.x += 50f;
             GUI.Label(fieldRect, new GUIContent(warningCount.ToString(), AssetValidatorGraphicsUtility.WarningIconSmall));
-            fieldRect.x += 40f;
+            fieldRect.x += 50f;
             GUI.Label(fieldRect, new GUIContent(errorCount.ToString(), AssetValidatorGraphicsUtility.ErrorIconSmall));
 
             EditorGUILayout.EndHorizontal();
@@ -675,7 +659,7 @@ namespace JCMG.AssetValidator.Editor.Window
 
             fieldRect = new Rect(miscRect)
             {
-                xMin = miscRect.xMin + miscRect.width - 120f,
+                xMin = miscRect.xMin + miscRect.width - 140f,
                 width = 40f
             };
 

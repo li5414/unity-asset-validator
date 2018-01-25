@@ -34,7 +34,7 @@ namespace JCMG.AssetValidator.Editor.Validators
         protected readonly AssetValidatorLogger _logger;
 
         protected int _continousProgress;
-        protected const int _continuousObjectsPerStep = 5;
+        protected const int _continuousObjectsPerStep = 1;
 
         protected BaseValidatorManager(AssetValidatorLogger logger)
         {

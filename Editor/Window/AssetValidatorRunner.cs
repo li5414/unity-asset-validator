@@ -28,6 +28,7 @@ using JCMG.AssetValidator.Editor.Validators.Output;
 using JCMG.AssetValidator.UnitTestObjects;
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -46,6 +47,7 @@ namespace JCMG.AssetValidator.Editor.Window
         private int _sceneProgress;
         private string _currentScenePath;
         private bool _isRunning;
+        private double _runningTime;
 
         private readonly IList<string> _scenePaths;
         private readonly AssetValidatorLogger _logger;
@@ -74,6 +76,7 @@ namespace JCMG.AssetValidator.Editor.Window
             AssetValidatorOverrideConfig.FindOrCreate().AddDisabledLogs(logger);
 
             _isRunning = true;
+            _runningTime = EditorApplication.timeSinceStartup;
         }
 
         public void EnableCrossSceneValidation()
@@ -114,22 +117,12 @@ namespace JCMG.AssetValidator.Editor.Window
         }
 
         /// <summary>
-        /// TODO Replace with more specific progress messages per domain of validator.
+        /// Returns a message describing the runtime of the AssetValidatorRunner
         /// </summary>
         /// <returns></returns>
         public string GetProgressMessage()
         {
-            switch (_runningState)
-            {
-                case RunningState.InstanceState:
-                    return string.Format("Validating at {0:P2}% for Target: {1}", GetProgress(), GetCurrentTarget());
-                case RunningState.CrossSceneState:
-                    return string.Format("Validating at {0:P2}% for Target: {1}", GetProgress(), GetCurrentTarget());
-                case RunningState.ProjectAssetState:
-                    return string.Format("Validating at {0:P2}% for Target: {1}", GetProgress(), GetCurrentTarget());
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return string.Format("Running for {0:F} seconds...", EditorApplication.timeSinceStartup - _runningTime);
         }
 
         public void Run()
