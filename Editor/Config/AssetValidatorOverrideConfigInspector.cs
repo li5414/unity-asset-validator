@@ -65,7 +65,7 @@ namespace JCMG.AssetValidator.Editor.Config
             {
                 var originalColor = GUI.color;
                 GUI.color = new Color(0.5f, 0.5f, 0.5f, 1);
-                AssetValidatorUtility.HeaderBackground.Draw(headerRect, false, false, false, false);
+                AssetValidatorGraphicsUtility.Styles.HeaderBackground.Draw(headerRect, false, false, false, false);
                 GUI.color = originalColor;
             }
             EditorGUILayout.BeginHorizontal();
@@ -79,7 +79,7 @@ namespace JCMG.AssetValidator.Editor.Config
 
             var contentsRect = EditorGUILayout.BeginVertical();
             GUILayout.Space(5f);
-            GUI.Box(contentsRect, GrayTexture2D);
+            GUI.Box(contentsRect, AssetValidatorGraphicsUtility.GrayTexture2D);
             EditorGUI.BeginChangeCheck();
             for (var i = 0; i < oItems.Count; i++)
             {
@@ -130,21 +130,6 @@ namespace JCMG.AssetValidator.Editor.Config
             if (type.IsSubclassOf(typeof(BaseProjectValidator))) return "Project Validator";
 
             return "Unknown";
-        }
-
-        private static readonly Color _gColor = new Color(0.5f, 0.5f, 0.5f, 1f);
-        private static Texture2D _gTexture2D;
-        public static Texture2D GrayTexture2D
-        {
-            get { return _gTexture2D ?? (_gTexture2D = CreateUITexture(_gColor)); }
-        }
-        private static Texture2D CreateUITexture(Color color)
-        {
-            var tex = new Texture2D(1, 1);
-            tex.SetPixel(0, 0, color);
-            tex.Apply();
-
-            return tex;
         }
     }
 }

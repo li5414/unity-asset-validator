@@ -1,4 +1,4 @@
-﻿/*
+/*
 AssetValidator 
 Copyright (c) 2018 Jeff Campbell
 
@@ -20,44 +20,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using UnityEditor.SceneManagement;
 
-// ReSharper disable once CheckNamespace
-namespace JCMG.AssetValidator.Editor.Validators.Output
+using System.Runtime.Serialization;
+
+namespace JCMG.AssetValidator.Editor.Utility
 {
-    public partial class VLog
+    public enum VLogTreeGroupByMode
     {
-        public string GetSourceDescription()
-        {
-            switch (source)
-            {
+        [EnumMember(Value = "Group by Validator")]
+        CollapseByValidatorType = 0,
 
-                case VLogSource.Scene:
-                    return scenePath;
-                case VLogSource.Project:
-                    return "Project";
-                default:
-                case VLogSource.None:
-                    return "None";
-            }
-        }
-
-        public bool HasObjectPath()
-        {
-            return !string.IsNullOrEmpty(objectPath);
-        }
-
-        public bool CanLoadScene()
-        {
-            return !string.IsNullOrEmpty(scenePath) &&
-                   EditorSceneManager.GetActiveScene().path != scenePath;
-        }
-
-        public bool CanPingObject()
-        {
-            return HasObjectPath() &&
-                   (source == VLogSource.Scene && EditorSceneManager.GetActiveScene().path == scenePath ||
-                    source == VLogSource.Project);
-        }
+        [EnumMember(Value = "Group by Source (Scene and Project)")]
+        CollapseByArea = 1,
     }
 }

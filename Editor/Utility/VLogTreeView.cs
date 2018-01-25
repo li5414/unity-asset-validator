@@ -22,15 +22,14 @@ SOFTWARE.
 */
 #if UNITY_5_6_OR_NEWER
 
-using JCMG.AssetValidator.Editor.Utility;
-using JCMG.AssetValidator.Editor.Validators.Output;
 using System;
 using System.Collections.Generic;
+using JCMG.AssetValidator.Editor.Validators.Output;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
-namespace JCMG.AssetValidator.Editor.Window
+namespace JCMG.AssetValidator.Editor.Utility
 {
     public class VLogTreeView : TreeView
     {

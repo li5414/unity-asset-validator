@@ -20,12 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using JCMG.AssetValidator.Editor.Validators.Output;
+
 using JCMG.AssetValidator.Editor.Validators;
-using JCMG.AssetValidator.Editor.Window;
+using JCMG.AssetValidator.Editor.Validators.Output;
 using UnityEditor;
 
-namespace JCMG.AssetValidator.Editor
+namespace JCMG.AssetValidator.Editor.Window
 {
     public static class AssetValidatorMenuItems
     {

@@ -42,12 +42,12 @@ namespace JCMG.AssetValidator.Editor.Validators.FieldValidators.PropertyDrawers
             if (isInvalid)
             {
                 label = EditorGUI.BeginProperty(position, label, property);
-                var contentPosition = EditorGUI.PrefixLabel(position, label, ValidationGraphicsConstants.ErrorStyle);
+                var contentPosition = EditorGUI.PrefixLabel(position, label, AssetValidatorGraphicsUtility.ErrorStyle);
                 EditorGUI.indentLevel = 0;
                 EditorGUI.PropertyField(contentPosition, property, GUIContent.none);
                 EditorGUI.EndProperty();
 
-                //EditorGUI.LabelField(new Rect(position.x, position.y, position.width, position.height / 2f), "Missing Ref!", ValidationGraphicsConstants.ErrorStyle);
+                //EditorGUI.LabelField(new Rect(position.x, position.y, position.width, position.height / 2f), "Missing Ref!", AssetValidatorGraphicsUtility.ErrorStyle);
                 //EditorGUI.PropertyField(new Rect(position.x, position.y + position.height, position.width, position.height / 2f), property);
             }
             else

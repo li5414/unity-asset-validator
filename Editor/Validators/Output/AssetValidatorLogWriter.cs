@@ -20,15 +20,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using JCMG.AssetValidator.Editor.Utility;
-using JCMG.AssetValidator.Editor.Validators.Output;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using JCMG.AssetValidator.Editor.Utility;
 
-namespace JCMG.AssetValidator.Editor.Window
+namespace JCMG.AssetValidator.Editor.Validators.Output
 {
     public sealed class AssetValidatorLogWriter : IDisposable
     {
@@ -44,9 +44,6 @@ namespace JCMG.AssetValidator.Editor.Window
         {
             _fileName = fileName + OutputFormatUtility.GetOutputFormatExtension(oFormat);
             _oFormat = oFormat;
-
-            //if(!FileUtility.IsValidFilename(_fileName))
-            //     throw new ArgumentException(string.Format("Filename [{0}] is invalid!", _fileName));
 
             _stringBuilder = new StringBuilder();
         }

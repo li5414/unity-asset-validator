@@ -20,20 +20,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+#if UNITY_5_6_OR_NEWER
+using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
 namespace JCMG.AssetValidator.Editor.Utility
 {
-    public static class ValidationGraphicsConstants
+    public class VLogTreeViewHeader : TreeViewItem
     {
-        public const string CrossIconPath = "Assets/JCMG/AssetValidator/Editor/Graphics/cross_icon.png";
-        public const string CheckIconPath = "Assets/JCMG/AssetValidator/Editor/Graphics/check_icon.png";
-        public const string QuestionIconPath = "Assets/JCMG/AssetValidator/Editor/Graphics/question_icon.png";
+        public int errorCount;
+        public int warningCount;
+        public int infoCount;
+        public bool hasLogCounts;
 
-        public static GUIStyle ErrorStyle = new GUIStyle
+        public VLogTreeViewHeader(int id, int depth, string displayName) : base(id, depth, displayName)
         {
-            fontStyle = FontStyle.Bold,
-            normal = { textColor = Color.red },
-        };
+        }
+
+        public void SetLogCounts(int errors, int warnings, int infos)
+        {
+            errorCount = Mathf.Clamp(errors, 0, 999);
+            warningCount = Mathf.Clamp(warnings, 0, 999);
+            infoCount = Mathf.Clamp(infos, 0, 999);
+
+            hasLogCounts = true;
+        }
     }
 }
+#endif

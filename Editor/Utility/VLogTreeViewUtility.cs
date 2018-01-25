@@ -21,14 +21,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #if UNITY_5_6_OR_NEWER
-using JCMG.AssetValidator.Editor.Utility;
-using JCMG.AssetValidator.Editor.Validators.Output;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JCMG.AssetValidator.Editor.Validators.Output;
+using JCMG.AssetValidator.Editor.Window;
 using UnityEditor.IMGUI.Controls;
 
-namespace JCMG.AssetValidator.Editor.Window
+namespace JCMG.AssetValidator.Editor.Utility
 {
     public static class VLogTreeViewUtility
     {

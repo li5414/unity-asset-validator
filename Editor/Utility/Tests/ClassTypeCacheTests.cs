@@ -22,6 +22,7 @@ SOFTWARE.
 */
 using JCMG.AssetValidator.Editor.Meta;
 using NUnit.Framework;
+using System;
 using UnityEngine;
 
 namespace JCMG.AssetValidator.Editor.Utility.Tests
@@ -49,7 +50,7 @@ namespace JCMG.AssetValidator.Editor.Utility.Tests
         [Test]
         public void AssertThatTypeCacheCanProperlyFindAndCacheTypesWithAttributes()
         {
-            classTypeCache.AddTypeWithAttribute<CTCValidatedEntity, ValidateAttribute>();
+            classTypeCache.AddTypeWithAttribute<CTCValidatedEntity, TestClassAttribute>();
 
             Assert.AreEqual(1, classTypeCache.Count);
             Assert.AreEqual(typeof(CTCTestValidatedEntity), classTypeCache[0]);
@@ -59,7 +60,7 @@ namespace JCMG.AssetValidator.Editor.Utility.Tests
         public void AssertThatTypeCacheCanIgnoreClassTypes()
         {
             classTypeCache.IgnoreType<IgnoredCTCTestValidatedEntity>();
-            classTypeCache.AddTypeWithAttribute<CTCValidatedEntity, ValidateAttribute>();
+            classTypeCache.AddTypeWithAttribute<CTCValidatedEntity, TestClassAttribute>();
 
             Assert.AreEqual(1, classTypeCache.Count);
             Assert.AreEqual(typeof(CTCTestValidatedEntity), classTypeCache[0]);
@@ -69,8 +70,8 @@ namespace JCMG.AssetValidator.Editor.Utility.Tests
         public void AssertThatTypeCacheCanIgnoreAttributeTypes()
         {
             classTypeCache.IgnoreType<IgnoredCTCTestValidatedEntity>();
-            classTypeCache.IgnoreAttribute<ValidateAttribute>();
-            classTypeCache.AddTypeWithAttribute<CTCValidatedEntity, ValidateAttribute>();
+            classTypeCache.IgnoreAttribute<TestClassAttribute>();
+            classTypeCache.AddTypeWithAttribute<CTCValidatedEntity, TestClassAttribute>();
 
             // Because we've added VValidateAttribute as an ignored attribute, we shouldn't find any types
             Assert.AreEqual(0, classTypeCache.Count);
@@ -78,16 +79,22 @@ namespace JCMG.AssetValidator.Editor.Utility.Tests
 
         public abstract class CTCValidatedEntity : MonoBehaviour { }
 
-        [Validate]
+        [AttributeUsage(AttributeTargets.Class)]
+        public class TestClassAttribute : Attribute { }
+
+        [AttributeUsage(AttributeTargets.Field)]
+        public class TestFieldAttribute : Attribute { }
+
+        [TestClass]
         public class CTCTestValidatedEntity : CTCValidatedEntity
         {
-            [NonNull]
+            [TestField]
             public GameObject PublicRef;
         }
 
         public class IgnoredCTCTestValidatedEntity : CTCTestValidatedEntity
         {
-            
+
         }
     }
 }

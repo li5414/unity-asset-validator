@@ -24,7 +24,7 @@ SOFTWARE.
 using JCMG.AssetValidator.Editor.Validators.Output;
 using UnityEditor.IMGUI.Controls;
 
-namespace JCMG.AssetValidator.Editor.Window
+namespace JCMG.AssetValidator.Editor.Utility
 {
     public class VLogTreeViewItem : TreeViewItem
     {

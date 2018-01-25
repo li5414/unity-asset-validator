@@ -20,17 +20,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using JCMG.AssetValidator.Editor.Config;
-using JCMG.AssetValidator.Editor.Meta;
 using JCMG.AssetValidator.Editor.Validators;
 using JCMG.AssetValidator.Editor.Validators.Output;
-using JCMG.AssetValidator.UnitTestObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine;
 
 namespace JCMG.AssetValidator.Editor.Utility
 {
@@ -48,89 +44,6 @@ namespace JCMG.AssetValidator.Editor.Utility
             }
         }
         public const string ASSET_VALIDATOR_IS_DEBUGGING = "ASSET_VALIDATOR_IS_DEBUGGING";
-
-        private static GUIStyle _bodyBackground;
-        public static GUIStyle BodyBackground
-        {
-            get { return _bodyBackground ?? (_bodyBackground = "RL Background"); }
-        }
-
-        private static GUIStyle _headerBackground;
-        public static GUIStyle HeaderBackground
-        {
-            get { return _headerBackground ?? (_headerBackground = "RL Header"); }
-        }
-
-        public static void ValidateAllAssetsInAssetsFolder(AssetValidatorLogger logger)
-        {
-            AssetValidatorOverrideConfig.FindOrCreate().AddDisabledLogs(logger);
-
-            using (var projValidator = new ProjectAssetValidatorManager(GetDefaultClassCache(), logger))
-            {
-                while (projValidator.ContinueSearch())
-                {
-                    var searchProgress = projValidator.GetSearchProgress();
-                    EditorUtility.DisplayProgressBar("AssetValidator", 
-                                                     string.Format("Searching Project Assets: [{0:P2}%]", searchProgress),
-                                                     searchProgress);
-                }
-
-                while (projValidator.ContinueValidation())
-                {
-                    var searchProgress = projValidator.GetProgress();
-                    EditorUtility.DisplayProgressBar("AssetValidator",
-                                                     string.Format("Validating Project Assets: [{0:P2}%]", searchProgress),
-                                                     searchProgress);
-                }
-            }
-
-            EditorUtility.ClearProgressBar();
-        }
-
-        public static void ValidateAllAssetsInActiveScene(AssetValidatorLogger logger)
-        {
-            AssetValidatorOverrideConfig.FindOrCreate().AddDisabledLogs(logger);
-
-            var paths = new[] { EditorSceneManager.GetActiveScene().path };
-            using (var sceneValidator = new ActiveSceneValidatorManager(GetDefaultClassCache(), logger))
-                using (var validatorManager = new SceneValidatorManager(sceneValidator, paths))
-                    while (validatorManager.CanContinueValidating())
-                        validatorManager.ContinueValidating();
-        }
-        
-        public static void ValidateAllAssetsInAllScenes(AssetValidatorLogger logger)
-        {
-            AssetValidatorOverrideConfig.FindOrCreate().AddDisabledLogs(logger);
-
-            var allScenes = GetAllScenePathsInProject();
-            using (var sceneValidator = new ActiveSceneValidatorManager(GetDefaultClassCache(), logger))
-                using (var validatorManager = new SceneValidatorManager(sceneValidator, allScenes))
-                    while (validatorManager.CanContinueValidating())
-                        validatorManager.ContinueValidating();
-        }
-        
-        public static void ValidateAllAssetsInAllScenesInBuildSettings(AssetValidatorLogger logger)
-        {
-            AssetValidatorOverrideConfig.FindOrCreate().AddDisabledLogs(logger);
-
-            var buildScenes = GetAllScenePathsInBuildSettings();
-            using (var sceneValidator = new ActiveSceneValidatorManager(GetDefaultClassCache(), logger))
-                using (var validatorManager = new SceneValidatorManager(sceneValidator, buildScenes))
-                    while (validatorManager.CanContinueValidating())
-                        validatorManager.ContinueValidating();
-        }
-
-        public static void ValidateAllAssetsInAllScenesInBuildSettingsAndAssetBundles(AssetValidatorLogger logger)
-        {
-            AssetValidatorOverrideConfig.FindOrCreate().AddDisabledLogs(logger);
-
-            var scenePaths = GetAllScenePathsInAssetBundles();
-            scenePaths.AddRange(GetAllScenePathsInBuildSettings());
-            using (var sceneValidator = new ActiveSceneValidatorManager(GetDefaultClassCache(), logger))
-                using (var validatorManager = new SceneValidatorManager(sceneValidator, scenePaths))
-                    while (validatorManager.CanContinueValidating())
-                        validatorManager.ContinueValidating();
-        }
 
         public static IList<string> GetScenePaths(SceneValidationMode vmode)
         {
@@ -193,19 +106,6 @@ namespace JCMG.AssetValidator.Editor.Utility
             return attrs != null && attrs.Length > 0
                 ? attrs[0].Description
                 : string.Empty;
-        }
-
-        private static ClassTypeCache GetDefaultClassCache()
-        {
-            var coreCache = new ClassTypeCache();
-
-            // Ensure any unit test types do not get picked up for validation.
-            coreCache.IgnoreType<Monobehavior2>();
-            coreCache.IgnoreAttribute<OnlyIncludeInTestsAttribute>();
-
-            // Find all objects for validation
-            coreCache.AddTypeWithAttribute<MonoBehaviour, ValidateAttribute>();
-            return coreCache;
         }
     }
 }

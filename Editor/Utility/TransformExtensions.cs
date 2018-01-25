@@ -20,16 +20,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Runtime.Serialization;
+using UnityEngine;
 
-namespace JCMG.AssetValidator.Editor.Window
+namespace JCMG.AssetValidator.Editor.Utility
 {
-    public enum VLogTreeGroupByMode
+    public static class TransformExtensions
     {
-        [EnumMember(Value = "Group by Validator")]
-        CollapseByValidatorType = 0,
-
-        [EnumMember(Value = "Group by Source (Scene and Project)")]
-        CollapseByArea = 1,
+        public static string GetPath(this Transform current)
+        {
+            if (current.parent == null)
+                return current.name;
+            return string.Format("{0}/{1}", current.parent.GetPath(), current.name);
+        }
     }
 }

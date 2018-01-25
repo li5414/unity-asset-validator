@@ -20,9 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using UnityEditor.SceneManagement;
+
 namespace JCMG.AssetValidator.Editor.Validators.Output
 {
-    public partial class VLog
+    public class VLog
     {
         public VLogType vLogType;
         public VLogSource source;
@@ -30,5 +33,38 @@ namespace JCMG.AssetValidator.Editor.Validators.Output
         public string message;
         public string scenePath;
         public string objectPath;
+
+        public string GetSourceDescription()
+        {
+            switch (source)
+            {
+
+                case VLogSource.Scene:
+                    return scenePath;
+                case VLogSource.Project:
+                    return "Project";
+                default:
+                case VLogSource.None:
+                    return "None";
+            }
+        }
+
+        public bool HasObjectPath()
+        {
+            return !string.IsNullOrEmpty(objectPath);
+        }
+
+        public bool CanLoadScene()
+        {
+            return !string.IsNullOrEmpty(scenePath) &&
+                   EditorSceneManager.GetActiveScene().path != scenePath;
+        }
+
+        public bool CanPingObject()
+        {
+            return HasObjectPath() &&
+                   (source == VLogSource.Scene && EditorSceneManager.GetActiveScene().path == scenePath ||
+                    source == VLogSource.Project);
+        }
     }
 }

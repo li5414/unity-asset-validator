@@ -38,6 +38,16 @@ namespace JCMG.AssetValidator.Editor.Utility
         public static Action<VLog> OnLoadScene;
         public static Action<VLog> OnPingObject;
 
+        public const string CrossIconPath = "Assets/JCMG/AssetValidator/Editor/Graphics/cross_icon.png";
+        public const string CheckIconPath = "Assets/JCMG/AssetValidator/Editor/Graphics/check_icon.png";
+        public const string QuestionIconPath = "Assets/JCMG/AssetValidator/Editor/Graphics/question_icon.png";
+
+        public static GUIStyle ErrorStyle = new GUIStyle
+        {
+            fontStyle = FontStyle.Bold,
+            normal = { textColor = Color.red },
+        };
+
         public static class Styles
         {
             public static GUIStyle BodyBackground = "RL Background";
@@ -72,19 +82,12 @@ namespace JCMG.AssetValidator.Editor.Utility
                 }
             }
         }
-
+        private static readonly Color _dgColor = new Color(0.9f, 0.9f, 0.9f, 1f);
         private static readonly Color _gColor = new Color(0.5f, 0.5f, 0.5f, 1f);
         private static Texture2D _gTexture2D;
         public static Texture2D GrayTexture2D
         {
             get { return _gTexture2D ?? (_gTexture2D = CreateUITexture(_gColor)); }
-        }
-
-        private static readonly Color _dgColor = new Color(0.9f, 0.9f, 0.9f, 1f);
-        private static Texture2D _dgTexture2D;
-        public static Texture2D DarkGrayTexture2D
-        {
-            get { return _dgTexture2D ?? (_dgTexture2D = CreateUITexture(_dgColor)); }
         }
 
         private static Texture2D CreateUITexture(Color color)
