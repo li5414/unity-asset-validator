@@ -35,7 +35,7 @@ namespace JCMG.AssetValidator.Editor.Validators.ProjectValidators.Tests
         [SetUp]
         public void SetUp()
         {
-            _aValidator = new AssetBundlePathProjectValidator();
+            _aValidator = new AssetBundlePathProjectValidator(useTestContracts:true);
         }
 
         [Test]
@@ -76,6 +76,7 @@ namespace JCMG.AssetValidator.Editor.Validators.ProjectValidators.Tests
             Assert.False(_aValidator.Validate());
         }
 
+        [OnlyIncludeInTests]
         public class UnitTestAssetBundleContract : AssetBundlePathContract
         {
             public const string UNIT_TEST_ASSET_VALID_BUNDLE = "unit_test_bundle";

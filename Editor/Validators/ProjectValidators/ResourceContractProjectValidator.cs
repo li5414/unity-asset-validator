@@ -63,8 +63,17 @@ public class HeroClassResourcePathContract : ResourcePathContract
     {
         private List<string> ResourcePaths { get; set; }
 
+        private readonly bool _useTestContracts;
+
         public ResourceContractProjectValidator()
         {
+            ResourcePaths = new List<string>();
+        }
+
+        public ResourceContractProjectValidator(bool useTestContracts)
+        {
+            _useTestContracts = useTestContracts;
+
             ResourcePaths = new List<string>();
         }
 
@@ -78,9 +87,13 @@ public class HeroClassResourcePathContract : ResourcePathContract
             if (ResourcePaths.Count > 0) return;
 
             var contracts = ReflectionUtility.GetAllDerivedInstancesOfType<ResourcePathContract>();
-
             foreach (var contract in contracts)
+            {
+                if (!_useTestContracts && contract.GetType().GetCustomAttributes(typeof(OnlyIncludeInTestsAttribute), true).Length > 0)
+                    continue;
+
                 ResourcePaths.AddRange(contract.GetPaths());
+            }
         }
 
         public override bool Validate()

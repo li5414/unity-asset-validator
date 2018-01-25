@@ -90,7 +90,7 @@ namespace JCMG.AssetValidator.Editor.Window
             "Debugging ON"
         };
 
-        [MenuItem("Tools/AssetValidator/Open Asset Validator Window", priority = 1)]
+        [MenuItem("Tools/AssetValidator/Open Asset Validator Window", false, priority = 0)]
         [MenuItem("Window/Asset Validator")]
         public static void LaunchWindow()
         {

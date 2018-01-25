@@ -35,7 +35,7 @@ namespace JCMG.AssetValidator.Editor.Validators.ProjectValidators.Tests
         [SetUp]
         public void SetUp()
         {
-            _cValidator = new ResourceContractProjectValidator();
+            _cValidator = new ResourceContractProjectValidator(useTestContracts:true);
         }
 
         [Test]
@@ -57,6 +57,7 @@ namespace JCMG.AssetValidator.Editor.Validators.ProjectValidators.Tests
             Assert.True(_cValidator.Validate());
         }
 
+        [OnlyIncludeInTests]
         public class UnitTestResourcePathContract : ResourcePathContract
         {
             public const string UNIT_TEST_RESOURCE_PATH = "ProjectPrefabSearchTest";

@@ -65,8 +65,17 @@ public class HeroClassAssetBundleContract : AssetBundlePathContract
     {
         private Dictionary<string, List<string>> AssetBundleValidationCache { get; set; }
 
+        private readonly bool _useTestContracts;
+
         public AssetBundlePathProjectValidator()
         {
+            AssetBundleValidationCache = new Dictionary<string, List<string>>();
+        }
+
+        public AssetBundlePathProjectValidator(bool useTestContracts)
+        {
+            _useTestContracts = useTestContracts;
+
             AssetBundleValidationCache = new Dictionary<string, List<string>>();
         }
 
@@ -83,6 +92,9 @@ public class HeroClassAssetBundleContract : AssetBundlePathContract
 
             foreach (var contract in contracts)
             {
+                if(!_useTestContracts && contract.GetType().GetCustomAttributes(typeof(OnlyIncludeInTestsAttribute), true).Length > 0)
+                    continue;
+
                 var dict = contract.GetPaths();
 
                 foreach (var kvp in dict)

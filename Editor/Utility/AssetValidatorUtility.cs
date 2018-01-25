@@ -34,12 +34,20 @@ using UnityEngine;
 
 namespace JCMG.AssetValidator.Editor.Utility
 {
-    [InitializeOnLoad]
     public static class AssetValidatorUtility
     {
         public static OutputFormat EditorOuputFormat = OutputFormat.None;
         public static string EditorFilename = "asset_validator_results";
-        public static bool IsDebugging;
+
+        public static bool IsDebugging
+        {
+            get { return EditorPrefs.GetBool(ASSET_VALIDATOR_IS_DEBUGGING, false); }
+            set
+            {
+                EditorPrefs.SetBool(ASSET_VALIDATOR_IS_DEBUGGING, value);
+            }
+        }
+        public const string ASSET_VALIDATOR_IS_DEBUGGING = "ASSET_VALIDATOR_IS_DEBUGGING";
 
         private static GUIStyle _bodyBackground;
         public static GUIStyle BodyBackground
